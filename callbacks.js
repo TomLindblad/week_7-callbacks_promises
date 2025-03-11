@@ -27,6 +27,7 @@ function getAdvice(){
         });
 };
 
+/*
 function getAdviceById(id){
     fetch(`https://api.adviceslip.com/advice/${id}`)
         .then((response) => response.json())
@@ -37,6 +38,7 @@ function getAdviceById(id){
             console.error("Error fetching advice:", error)
         });
 };
+*/
 
 maybeAdvice
 .then((message) => {
