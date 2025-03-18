@@ -1,31 +1,39 @@
-const maybeAdvice = new Promise((resolve, reject) => {
+const maybeAdvice = async () =>{ 
+    return new Promise((resolve, reject) => {
         let result = Math.random();
 
         if (result > 0.5) {
-            resolve(fetch("https://api.adviceslip.com/advice")
-            .then((response) => response.json())
-            .then((data) => {
-                return(data.slip.advice);
-            })
+            resolve(getAdvice())
+
             .catch((error) => {
                 console.error("Error fetching advice:", error)
-            }));
+            });
         } 
         else {
             reject("No, there is no advice for you.");
         }
-});
+})};
 
-function getAdvice(){
-    fetch("https://api.adviceslip.com/advice")
-        .then((response) => response.json())
-        .then((data) => {
-            return(data.slip.advice);
-        })
-        .catch((error) => {
-            console.error("Error fetching advice:", error)
-        });
+async function flipCoinResult() {
+    try {
+        const response = await maybeAdvice();
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getAdvice(){
+    try {
+        const response = await fetch("https://api.adviceslip.com/advice");
+        const data = await response.json();
+        console.log(data.slip.advice);        
+    } catch (error) {
+            console.error("Error fetching advice:", error)        
+    }
 };
+
+flipCoinResult();
 
 /*
 function getAdviceById(id){
@@ -40,6 +48,7 @@ function getAdviceById(id){
 };
 */
 
+/*
 maybeAdvice
 .then((message) => {
     console.log(message);
@@ -47,3 +56,4 @@ maybeAdvice
 .catch((error) => {
     console.log(error);
 });
+*/
